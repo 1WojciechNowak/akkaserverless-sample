@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package com.example.users.domain;
+
+import "akkaserverless/annotations.proto";
+
+option (akkaserverless.file).value_entity = {
+  name: "Users"
+  entity_type: "user-list"
+  state: "UserList"
+};
+
+message SingleUser {
+  int32 userId = 1;
+  string firstName = 2;
+  string lastName = 3;
+}
+
+message UserList {
+  repeated SingleUser users = 1;
+}

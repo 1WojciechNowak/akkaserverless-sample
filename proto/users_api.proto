@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package com.example.users;
+
+import "google/protobuf/empty.proto";
+import "akkaserverless/annotations.proto";
+import "google/api/annotations.proto";
+
+message AddSingleUser {
+    int32 user_id = 1 [(akkaserverless.field).entity_key = true];
+    string first_name = 2;
+    string last_name = 3;
+}
+  
+message GetUserById {
+    string user_id = 1 [(akkaserverless.field).entity_key = true];
+}
+
+message SingleUser {
+    int32 userId = 1;
+    string firstName = 2;
+    string lastName = 3;
+}
+  
+message UserList {
+    repeated SingleUser users = 1;
+}
+
+service UsersService {
+    option (akkaserverless.service) = {
+        type: SERVICE_TYPE_ENTITY
+        component: ".domain.Users"
+    };
+
+    rpc AddUser (AddSingleUser) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/users/add/{user_id}"
+            body: "*"
+        };
+    }
+    
+    rpc GetUser (GetUserById) returns (SingleUser) {
+        option (google.api.http) = {
+            get: "/users/{user_id}"
+            response_body: "user"
+        };
+    }      
+}

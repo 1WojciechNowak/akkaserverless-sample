@@ -1,0 +1,3 @@
+curl -d '{"product_id": "tshirt-1", "name": "tshirt-red", "quantity": "3"}' -H "Content-Type: application/json" -X POST https://long-union-4748.us-east1.akkaserverless.app/cart/1/items/add
+
+curl --request GET --url https://long-union-4748.us-east1.akkaserverless.app/carts/1
